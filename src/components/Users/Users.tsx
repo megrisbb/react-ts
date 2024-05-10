@@ -4,9 +4,9 @@ import {IUser} from "../../interfaces/IUser";
 import {getUsers} from "../../services/axiosService";
 import {User} from "../User/User";
 
+type IPropsType = {lift: (userId:number) => void}
 
-
-const Users: FC = () => {
+const Users: FC<IPropsType> = ({lift}) => {
 
     const [users, setUsers] = useState<IUser[]>([])
 
@@ -20,7 +20,7 @@ const Users: FC = () => {
     return (
         <div>
             {
-                users.map((user) => <User key={user.id} user={user}/>)
+                users.map((user) => <User key={user.id} user={user} lift={lift}/>)
             }
         </div>
     );

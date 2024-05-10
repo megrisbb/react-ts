@@ -1,0 +1,11 @@
+.bodyBlock {
+    display: flex;
+}
+
+.posts {
+    width: 50%;
+}
+
+.users {
+    width: 50%;
+}
