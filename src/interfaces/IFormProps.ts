@@ -1,4 +1,5 @@
 export interface IFormProps {
-    title: string
-    body: string
+    title: string,
+    body: string,
+    userId: number;
 }
