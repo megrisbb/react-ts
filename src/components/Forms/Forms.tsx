@@ -1,54 +1,57 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { joiResolver } from "@hookform/resolvers/joi";
-import { postValidator } from "../../validators/postValidator";
-import { createPost } from "../../services/axiosService";
-import { IFormProps } from "../../interfaces/IFormProps";
+import {FC, useState} from "react";
+import {useForm} from "react-hook-form";
+import {joiResolver} from "@hookform/resolvers/joi";
 
-const Forms = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm<IFormProps>({
+import {IPostProps} from "../../interfaces/IPostProps";
+import {sendPost} from "../../services/axiosService";
+import {formValidators} from "../../validators/formValidators";
+
+const Forms: FC = () => {
+    const {register, handleSubmit, formState: {errors, isValid}} = useForm<IPostProps>({
         mode: "all",
-        resolver: joiResolver(postValidator)
+        resolver: joiResolver(formValidators)
     });
-    const [post, setPost] = useState<IFormProps | null>(null);
 
-    const saveForm = async (data: IFormProps) => {
-        try {
-            const postData = await createPost(data);
-            setPost(postData);
-        } catch (error) {
-            console.error("Error creating post:", error);
-        }
-    }
+    const [post, setPost] = useState<IPostProps | null>(null);
+
+    const savePost = (data: IPostProps) => {
+        sendPost(data)
+            .then(response => {
+                console.log(response);
+                setPost(response.data);
+            })
+            .catch(error => {
+                console.error('There was an error saving the post!', error);
+            });
+    };
 
     return (
         <div>
-            <form onSubmit={handleSubmit(saveForm)}>
-                <div>
-                    <input type="text" {...register('title')} placeholder="Title" />
-                    {errors.title && <p>{errors.title.message}</p>}
-                </div>
-                <div>
-                    <input type="text" {...register('body')} placeholder="Body" />
-                    {errors.body && <p>{errors.body.message}</p>}
-                </div>
-                <div>
-                    <input type="text" {...register('userId')} placeholder="User Id" />
-                    {errors.userId && <p>{errors.userId.message}</p>}
-                </div>
-                <button type="submit">Save</button>
+            <form onSubmit={handleSubmit(savePost)}>
+                <h2>Title</h2>
+                <input type="text" {...register('title')} placeholder="Title"/>
+                {errors.title && <p>{errors.title.message}</p>}
+                <br/>
+                <h2>Body</h2>
+                <input type="text" {...register('body')} placeholder="Body"/>
+                {errors.body && <p>{errors.body.message}</p>}
+                <br/>
+                <h2>User id</h2>
+                <input type="number" {...register('userId')} placeholder="4"/>
+                {errors.userId && <p>{errors.userId.message}</p>}
+                <br/>
+                <button type="submit" disabled={!isValid}>Submit</button>
             </form>
-
             {post && (
                 <div>
-                    <h2>Saved Post</h2>
+                    <h3>Post Saved:</h3>
                     <p>Title: {post.title}</p>
                     <p>Body: {post.body}</p>
-                    <p>User id: {post.userId}</p>
+                    <p>UserId: {post.userId}</p>
                 </div>
             )}
         </div>
     );
 };
 
-export { Forms };
+export {Forms};
