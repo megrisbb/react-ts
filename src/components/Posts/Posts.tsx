@@ -1,27 +1,17 @@
-import {FC, useEffect, useState} from "react";
+import { FC } from "react";
+import { IPostsInterface } from "../../interfaces/IPostsInterface";
+import { Post } from "../Post/Post";
 
-import {IPostProps} from "../../interfaces/IPostProps";
-import {postApiService} from "../../services/axiosService";
+interface IPostsProps {
+    posts: IPostsInterface[];
+}
 
-import {Post} from "../Post/Post";
-
-const Posts: FC = () => {
-
-    const [posts, setPosts] = useState<IPostProps[]>([])
-
-    useEffect(() => {
-        postApiService.getAllPosts()
-            .then(({data}) => {
-                setPosts(data)
-            })
-    }, []);
+const Posts: FC<IPostsProps> = ({ posts }) => {
     return (
         <div>
-            {
-                posts.map((post) => <Post key={post.id} post={post}/>)
-            }
+            {posts.map(post => <Post key={post.id} post={post} />)}
         </div>
     );
 };
 
-export {Posts};
+export { Posts };

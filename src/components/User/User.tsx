@@ -1,19 +1,29 @@
-import {FC} from "react";
-import {IUserProps} from "../../interfaces/IUserProps";
+import { FC } from "react";
+import { IUsersInterface } from "../../interfaces/IUsersInterface";
+import { Link } from "react-router-dom";
 
-interface IProps {
-    user: IUserProps
+interface IUserProps {
+    user: IUsersInterface;
 }
 
-const User:FC<IProps> = ({user}) => {
-
+const User: FC<IUserProps> = ({ user }) => {
+    const { id, name, username, email, phone, website } = user;
     return (
         <div>
-            <div>{user.id}</div>
-            <div>{user.name}</div>
-            <div>{user.username}</div>
+            <ul>
+                <li>Id: {id}</li>
+                <li>Name: {name}</li>
+                <li>Username: {username}</li>
+                <li>Email: {email}</li>
+                <li>Phone: {phone}</li>
+                <li>Website: {website}</li>
+            </ul>
+            <Link to={`/users/${id}`}>
+                <button>posts of user</button>
+            </Link>
+            <hr />
         </div>
     );
 };
 
-export {User};
+export { User };

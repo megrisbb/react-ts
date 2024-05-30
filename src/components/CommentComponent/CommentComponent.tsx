@@ -1,24 +1,24 @@
-import {FC} from "react";
+import { FC } from "react";
+import { ICommentsInterface } from "../../interfaces/ICommentsInterface";
 
-import {ICommentProps} from "../../interfaces/ICommentProps";
-
-
-interface IProps {
-    comment: ICommentProps
+interface ICommentProps {
+    comment: ICommentsInterface;
 }
 
-const CommentComponent:FC<IProps> = ({comment}) => {
-    const {postId, id, name, email, body} = comment
-
+const CommentComponent: FC<ICommentProps> = ({ comment }) => {
+    const { postId, id, name, email, body } = comment;
     return (
         <div>
-            <div>{postId}</div>
-            <div>{id}</div>
-            <div>{name}</div>
-            <div>{email}</div>
-            <div>{body}</div>
+            <ul>
+                <li>Post id: {postId}</li>
+                <li>Id: {id}</li>
+                <li>Name: {name}</li>
+                <li>Email: {email}</li>
+                <li>Body: {body}</li>
+            </ul>
+            <hr/>
         </div>
     );
 };
 
-export {CommentComponent};
+export { CommentComponent };

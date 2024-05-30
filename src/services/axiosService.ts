@@ -1,36 +1,45 @@
-import axios, {AxiosResponse} from "axios";
+import axios, { AxiosResponse } from "axios";
+import { IPostsInterface } from "../interfaces/IPostsInterface";
+import { IUsersInterface } from "../interfaces/IUsersInterface";
+import { ICommentsInterface } from "../interfaces/ICommentsInterface";
 
-import {IUserProps} from "../interfaces/IUserProps";
-import {IPostProps} from "../interfaces/IPostProps";
-import {ICommentProps} from "../interfaces/ICommentProps";
-
-const axiosInstance = axios.create({
-    baseURL: 'https://jsonplaceholder.typicode.com',
-    headers: {}
+const axiosApiService = axios.create({
+    baseURL: 'https://jsonplaceholder.typicode.com/',
+    headers: {
+        'Content-Type': 'application/json'
+    }
 });
 
-const userApiService = {
-    getAllUsers:():Promise<AxiosResponse<IUserProps[]>> => {
-        return axiosInstance.get("/users")
+const postsApiService = {
+    getAllPosts: (): Promise<AxiosResponse<IPostsInterface[]>> => {
+        return axiosApiService.get('/posts');
     },
-    getUserById: async (userId:number):Promise<AxiosResponse<IUserProps>> => {
-           return await axiosInstance.get(`/users/${userId}`);
+    getPostsOfUser: (userId: number): Promise<AxiosResponse<IPostsInterface[]>> => {
+        return axiosApiService.get(`/users/${userId}/posts`);
     }
-}
+};
 
-const postApiService = {
-    getAllPosts:():Promise<AxiosResponse<IPostProps[]>> => {
-        return axiosInstance.get("/posts")
+const usersApiService = {
+    getAllUsers: (): Promise<AxiosResponse<IUsersInterface[]>> => {
+        return axiosApiService.get('/users');
     },
-}
+    getUserByUserId: (userId: number): Promise<AxiosResponse<IUsersInterface>> => {
+        return axiosApiService.get(`/users/${userId}`);
+    }
+};
 
-const commentApiService = {
-    getAllComments:():Promise<AxiosResponse<ICommentProps[]>> => {
-        return axiosInstance.get("/comments")
+const commentsApiService = {
+    getAllComments: (): Promise<AxiosResponse<ICommentsInterface[]>> => {
+        return axiosApiService.get('/comments');
     },
-}
+    getCommentsOfPosts: (postId: string): Promise<AxiosResponse<ICommentsInterface[]>> => {
+        return axiosApiService.get(`/posts/${postId}/comments`);
+    }
+};
+
 export {
-    userApiService,
-    postApiService,
-    commentApiService,
-}
+    axiosApiService,
+    postsApiService,
+    usersApiService,
+    commentsApiService
+};

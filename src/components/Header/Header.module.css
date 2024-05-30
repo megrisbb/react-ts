@@ -1,0 +1,16 @@
+.headerBlock {
+    display: flex;
+    justify-content: space-around;
+    background-color: navajowhite;
+    height: 20vh;
+    align-items: center;
+}
+.headerBlock a {
+    text-decoration: none;
+    color: black;
+    font-size: 24px;
+}
+
+.headerBlock a:hover {
+    text-decoration: underline;
+}

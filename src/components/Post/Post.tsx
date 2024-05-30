@@ -1,20 +1,27 @@
-import {FC} from "react";
+import { FC } from "react";
+import { IPostsInterface } from "../../interfaces/IPostsInterface";
+import { Link } from "react-router-dom";
 
-import {IPostProps} from "../../interfaces/IPostProps";
-
-interface IProps {
-    post: IPostProps
+interface IPostProps {
+    post: IPostsInterface;
 }
 
-const Post:FC<IProps> = ({post}) => {
+const Post: FC<IPostProps> = ({ post }) => {
+    const { userId, id, title, body } = post;
     return (
         <div>
-            <div>{post.userId}</div>
-            <div>{post.id}</div>
-            <div>{post.title}</div>
-            <div>{post.body}</div>
+            <ul>
+                <li>User id: {userId}</li>
+                <li>Id: {id}</li>
+                <li>Title: {title}</li>
+                <li>Body: {body}</li>
+            </ul>
+            <Link to={`/posts/${id}`}>
+                <button>comments of post</button>
+            </Link>
+            <br />
         </div>
     );
 };
 
-export {Post};
+export { Post };

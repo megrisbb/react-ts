@@ -1,26 +1,17 @@
-import {useEffect, useState} from "react";
+import { FC } from "react";
+import { ICommentsInterface } from "../../interfaces/ICommentsInterface";
+import { CommentComponent } from "../CommentComponent/CommentComponent";
 
-import {ICommentProps} from "../../interfaces/ICommentProps";
-import {commentApiService} from "../../services/axiosService";
+interface ICommentsProps {
+    comments: ICommentsInterface[];
+}
 
-import {CommentComponent} from "../CommentComponent/CommentComponent";
-
-const Comments = () => {
-
-    const [comments, setComments] = useState<ICommentProps[]>([])
-
-    useEffect(() => {
-        commentApiService.getAllComments()
-            .then(({data}) => {
-                setComments(data)
-            })
-    }, []);
-
+const Comments: FC<ICommentsProps> = ({ comments }) => {
     return (
         <div>
-            {comments.map((comment) => <CommentComponent key={comment.id} comment={comment}/>)}
+            {comments.map(comment => <CommentComponent key={comment.id} comment={comment} />)}
         </div>
     );
 };
 
-export {Comments};
+export { Comments };

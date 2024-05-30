@@ -1,24 +1,27 @@
-import React from "react";
 import {createBrowserRouter} from "react-router-dom";
 
-import {MainLayout} from "../layout/MainLayout";
+import {MainLayout} from "../layouts/MainLayout";
+
 import {HomePage} from "../pages/HomePage";
+import {UsersPage} from "../pages/UsersPage";
+import {PostsPage} from "../pages/PostsPage";
+import {CommentsPage} from "../pages/CommentsPage";
 
-import {UsersComponent} from "../components/UsersComponent";
-import {Posts} from "../components/Posts/Posts";
-import {Comments} from "../components/Comments/Comments";
-
- export const routerConfig = createBrowserRouter(
+const routerConfig = createBrowserRouter(
     [
-        {
-            path: '/',
-            element: <MainLayout/>,
+        {path: '/', element: <MainLayout/>,
             children:[
                 {index: true, element: <HomePage/>},
-                {path: 'users', element: <UsersComponent/>},
-                {path: 'posts', element: <Posts/>},
-                {path: 'comments', element: <Comments/>}
+                {path: 'users', element: <UsersPage />},
+                {path: 'users/:id', element: <PostsPage />},
+                {path: 'posts', element: <PostsPage/>},
+                {path: 'posts/:id', element: <CommentsPage/>},
+                {path: 'comments', element: <CommentsPage/>}
             ]
         }
     ]
 )
+
+export {
+    routerConfig
+}

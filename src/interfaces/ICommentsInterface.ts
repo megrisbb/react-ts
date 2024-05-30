@@ -1,4 +1,4 @@
-export interface ICommentProps {
+export interface ICommentsInterface {
     postId: number,
     id: number,
     name: string,

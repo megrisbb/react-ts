@@ -1,4 +1,4 @@
-export interface IPostProps {
+export interface IPostsInterface {
     userId: number,
     id: number,
     title: string,
