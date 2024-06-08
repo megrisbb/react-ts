@@ -19,7 +19,9 @@ const authService = {
         // Повертаємо true, якщо у відповіді є і access, і refresh токени, і false в іншому випадку
         return !!(response?.data?.access && response?.data?.refresh);
     },
-    refresh: () => {
+    refresh: async (refreshToken: string) => {
+        const response = await axiosInstance.post<ITokenObtainPair>('/auth/refresh', {refresh: refreshToken});
+        localStorage.setItem('tokenPair', JSON.stringify(response.data))
     }
 }
 
